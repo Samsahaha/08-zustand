@@ -4,6 +4,9 @@ import css from "./NoteDetails.module.css";
 
 type NoteDetailsProps = {
   note: Note;
+  /** Ренер усередині модалки (parallel route @modal) */
+  variant?: "page" | "modal";
+  titleId?: string;
 };
 
 function formatDate(iso: string) {
@@ -17,24 +20,32 @@ function formatDate(iso: string) {
   }
 }
 
-export function NoteDetails({ note }: NoteDetailsProps) {
-  return (
-    <main className={css.main}>
-      <div className={css.container}>
-        <div className={css.item}>
-          <div className={css.header}>
-            <h2>{note.title}</h2>
-            <span className={css.tag} title={note.tag}>
-              {note.tag}
-            </span>
-          </div>
-          <p className={css.content}>{note.content}</p>
-          <p className={css.date}>{formatDate(note.createdAt)}</p>
-          <Link className={css.backBtn} href="/notes">
-            ← Back to notes
-          </Link>
+export function NoteDetails({
+  note,
+  variant = "page",
+  titleId,
+}: NoteDetailsProps) {
+  const inner = (
+    <div className={css.container}>
+      <div className={css.item}>
+        <div className={css.header}>
+          <h2 id={titleId}>{note.title}</h2>
+          <span className={css.tag} title={note.tag}>
+            {note.tag}
+          </span>
         </div>
+        <p className={css.content}>{note.content}</p>
+        <p className={css.date}>{formatDate(note.createdAt)}</p>
+        <Link className={css.backBtn} href="/notes">
+          ← Back to notes
+        </Link>
       </div>
-    </main>
+    </div>
   );
+
+  if (variant === "modal") {
+    return <div className={css.main}>{inner}</div>;
+  }
+
+  return <main className={css.main}>{inner}</main>;
 }

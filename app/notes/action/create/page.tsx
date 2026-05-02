@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { LayoutNotes } from "@/components/LayoutNotes/LayoutNotes";
 import { CreateNote } from "@/components/CreateNote/CreateNote";
 import { getSiteUrl } from "@/lib/site";
+import { NOTE_TAGS } from "@/types/note";
 
 const ogImage = "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
 
@@ -24,5 +26,9 @@ export const metadata: Metadata = {
 };
 
 export default function CreateNotePage() {
-  return <CreateNote />;
+  return (
+    <LayoutNotes tags={NOTE_TAGS}>
+      <CreateNote />
+    </LayoutNotes>
+  );
 }
