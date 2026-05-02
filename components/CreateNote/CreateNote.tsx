@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { NoteForm } from "@/components/NoteForm/NoteForm";
-import { createNoteRequest } from "@/lib/api/notes";
+import { createNoteRequest } from "@/lib/api";
 import { useNoteStore } from "@/lib/store/noteStore";
 import type { NoteTag } from "@/types/note";
 import { NOTE_TAGS } from "@/types/note";

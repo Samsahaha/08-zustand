@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LayoutNotes } from "@/components/LayoutNotes/LayoutNotes";
-import { NoteDetails } from "@/components/NoteDetails/NoteDetails";
-import { fetchNoteById } from "@/lib/api/notes";
+import { fetchNoteById } from "@/lib/api";
 import { getSiteUrl } from "@/lib/site";
 import { NOTE_TAGS } from "@/types/note";
+import { NoteDetailsClient } from "./NoteDetails.client";
 
 const ogImage = "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
 
@@ -52,7 +52,7 @@ export default async function NotePage({ params }: PageProps) {
     const note = await fetchNoteById(id);
     return (
       <LayoutNotes tags={NOTE_TAGS}>
-        <NoteDetails note={note} />
+        <NoteDetailsClient note={note} />
       </LayoutNotes>
     );
   } catch {

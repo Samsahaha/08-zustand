@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { NoteList } from "@/components/NoteList/NoteList";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { SearchBox } from "@/components/SearchBox/SearchBox";
-import { fetchNotesPage } from "@/lib/api/notes";
+import { fetchNotesPage } from "@/lib/api";
 import type { NoteTag } from "@/types/note";
 import css from "./NotesPage.module.css";
 

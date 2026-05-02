@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { NoteModal } from "@/components/NoteModal/NoteModal";
-import { fetchNoteById } from "@/lib/api/notes";
+import { fetchNoteById } from "@/lib/api";
+import { NotePreviewClient } from "./NotePreview.client";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -11,7 +11,7 @@ export default async function InterceptedNoteModalPage({ params }: PageProps) {
 
   try {
     const note = await fetchNoteById(id);
-    return <NoteModal note={note} />;
+    return <NotePreviewClient note={note} />;
   } catch {
     notFound();
   }

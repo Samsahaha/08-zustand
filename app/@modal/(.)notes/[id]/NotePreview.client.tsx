@@ -5,11 +5,11 @@ import type { Note } from "@/types/note";
 import { Modal } from "@/components/Modal/Modal";
 import { NoteDetails } from "@/components/NoteDetails/NoteDetails";
 
-type NoteModalProps = {
+type NotePreviewClientProps = {
   note: Note;
 };
 
-export function NoteModal({ note }: NoteModalProps) {
+export function NotePreviewClient({ note }: NotePreviewClientProps) {
   const router = useRouter();
 
   return (

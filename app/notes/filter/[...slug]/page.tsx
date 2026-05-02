@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { NotesClient } from "../../NotesClient";
 import { getSiteUrl } from "@/lib/site";
 import type { NoteTag } from "@/types/note";
 import { NOTE_TAGS } from "@/types/note";
+import { Notes } from "./Notes.client";
 
 const ogImage = "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
 
@@ -56,7 +56,7 @@ export default async function FilteredNotesPage({ params }: PageProps) {
 
   return (
     <Suspense fallback={<p style={{ padding: 16 }}>Завантаження…</p>}>
-      <NotesClient filterTag={tag} />
+      <Notes filterTag={tag} />
     </Suspense>
   );
 }
