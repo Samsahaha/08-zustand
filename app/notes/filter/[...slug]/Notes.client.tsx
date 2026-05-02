@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NoteList } from "@/components/NoteList/NoteList";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { SearchBox } from "@/components/SearchBox/SearchBox";
@@ -20,6 +20,9 @@ export type NotesProps = {
 
 export function Notes({ filterTag }: NotesProps) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const prevDebouncedSearchRef = useRef<string | undefined>(undefined);
 
   const pageFromUrl = Number(searchParams.get("page") ?? "1");
   const page =
@@ -34,6 +37,25 @@ export function Notes({ filterTag }: NotesProps) {
     }, SEARCH_DEBOUNCE_MS);
     return () => window.clearTimeout(timer);
   }, [searchInput]);
+
+  useEffect(() => {
+    if (prevDebouncedSearchRef.current === undefined) {
+      prevDebouncedSearchRef.current = debouncedSearch;
+      return;
+    }
+    if (prevDebouncedSearchRef.current === debouncedSearch) {
+      return;
+    }
+    prevDebouncedSearchRef.current = debouncedSearch;
+
+    const params = new URLSearchParams(searchParams.toString());
+    if (!params.has("page")) {
+      return;
+    }
+    params.delete("page");
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  }, [debouncedSearch, pathname, router, searchParams]);
 
   const listQueryKey = useMemo(
     () => [
